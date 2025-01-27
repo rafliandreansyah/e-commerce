@@ -1,0 +1,136 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id        String    @id @default(uuid())
+  name      String    @db.VarChar(255)
+  email     String    @unique @db.VarChar(255)
+  password  String    @db.VarChar(255)
+  role      Role      @default(USER)
+  image_url String?   @db.VarChar(255)
+  birthday  DateTime?
+  phone     String    @db.VarChar(255)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Order     Order[]
+  Session   Session[]
+}
+
+model Session {
+  id        String   @id
+  userId    String
+  expiresAt DateTime
+
+  user User @relation(references: [id], fields: [userId], onDelete: Cascade)
+}
+
+enum Role {
+  USER
+  SUPERADMIN
+}
+
+model Order {
+  id           String         @id @default(uuid())
+  user_id      String
+  user         User           @relation(fields: [user_id], references: [id])
+  code         String         @db.VarChar(255)
+  total        Decimal        @db.Money
+  status_order StatusOrder    @default(pending)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  OrderDetail  OrderDetail?
+  OrderProduct OrderProduct[]
+}
+
+enum StatusOrder {
+  pending
+  success
+  failed
+}
+
+model OrderDetail {
+  id          String   @id @default(uuid())
+  order_id    String   @unique
+  order       Order    @relation(fields: [order_id], references: [id])
+  name        String   @db.VarChar(255)
+  phone       String   @db.VarChar(255)
+  address     String   @db.Text
+  city        String   @db.VarChar(255)
+  postal_code Int
+  notes       String   @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Brand {
+  id        String    @id @default(uuid())
+  name      String    @db.VarChar(255)
+  logo      String    @db.VarChar(255)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Product   Product[]
+}
+
+model Category {
+  id        String    @id @default(uuid())
+  name      String    @db.VarChar(255)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Product   Product[]
+}
+
+model Location {
+  id        String    @id @default(uuid())
+  name      String    @db.VarChar(255)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Product   Product[]
+}
+
+model Product {
+  id           String         @id @default(uuid())
+  brand_id     String
+  brand        Brand          @relation(fields: [brand_id], references: [id])
+  category_id  String
+  category     Category       @relation(fields: [category_id], references: [id])
+  location_id  String
+  location     Location       @relation(fields: [location_id], references: [id])
+  name         String         @db.VarChar(255)
+  description  String         @db.Text
+  price        Decimal        @db.Money
+  stock        ProductStock
+  images       String[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  OrderProduct OrderProduct[]
+}
+
+enum ProductStock {
+  preorder
+  ready
+}
+
+model OrderProduct {
+  id         String   @id @default(uuid())
+  order_id   String
+  order      Order    @relation(fields: [order_id], references: [id])
+  product_id String
+  product    Product  @relation(fields: [product_id], references: [id])
+  subtotal   Decimal  @db.Money
+  quantity   Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
