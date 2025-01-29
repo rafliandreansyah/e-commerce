@@ -15,6 +15,10 @@ import { useActionState } from "react";
 import { signIn } from "../lib/action";
 import { ActionResult } from "@/types";
 import Form from "next/form";
+import { AlertCircle } from "lucide-react";
+
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { MoonLoader } from "react-spinners";
 
 export function LoginForm({
   className,
@@ -40,6 +44,13 @@ export function LoginForm({
           </CardHeader>
           <CardContent>
             <div className="flex flex-col gap-6">
+              {state.error !== "" && (
+                <Alert variant="destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertTitle>Error</AlertTitle>
+                  <AlertDescription>{state.error}</AlertDescription>
+                </Alert>
+              )}
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
@@ -62,7 +73,7 @@ export function LoginForm({
                 <Input id="password" type="password" name="password" />
               </div>
               <Button type="submit" className="w-full" disabled={isPending}>
-                {isPending ? "Loading..." : "Login..."}
+                {isPending ? <MoonLoader size={20} color="#ffffff" /> : "Login"}
               </Button>
               <Button variant="outline" className="w-full">
                 Login with Google
