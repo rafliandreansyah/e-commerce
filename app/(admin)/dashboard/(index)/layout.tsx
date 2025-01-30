@@ -1,20 +1,28 @@
 import type { Metadata } from "next";
 import "../../../globals.css";
 
-import { AppSidebar } from "@/components/app-sidebar";
+import { AppSidebar } from "./_components/app-sidebar";
 
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import AppHeader from "@/components/app-header";
+import AppHeader from "./_components/app-header";
+import { getUser } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Dashboard",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { session } = await getUser();
+
+  if (!session) {
+    return redirect("/dashboard/sign-in");
+  }
+
   return (
     <SidebarProvider>
       <AppSidebar />

@@ -6,8 +6,8 @@ import {
   BreadcrumbLink,
   BreadcrumbSeparator,
   BreadcrumbPage,
-} from "./ui/breadcrumb";
-import { SidebarTrigger } from "./ui/sidebar";
+} from "@/components/ui/breadcrumb";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 
 export default function AppHeader() {
   return (

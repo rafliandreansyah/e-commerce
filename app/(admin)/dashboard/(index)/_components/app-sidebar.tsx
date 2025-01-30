@@ -1,7 +1,5 @@
 import * as React from "react";
 
-import { SearchForm } from "@/components/search-form";
-import { VersionSwitcher } from "@/components/version-switcher";
 import {
   Sidebar,
   SidebarContent,
@@ -14,6 +12,9 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import FormLogout from "./form-logout";
+import { SearchForm } from "./search-form";
+import { VersionSwitcher } from "./version-switcher";
 
 // This is sample data.
 const data = {
@@ -50,16 +51,6 @@ const data = {
         },
       ],
     },
-    {
-      title: "Settings",
-      url: "#",
-      items: [
-        {
-          title: "Logout",
-          url: "/dashboard/logout",
-        },
-      ],
-    },
   ],
 };
 
@@ -87,6 +78,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
+                <FormLogout />
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
