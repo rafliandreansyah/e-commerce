@@ -23,6 +23,7 @@ export async function signIn(
     };
   }
 
+  console.log(validate.data.email);
   const existingUser = await prisma.user.findFirst({
     where: {
       email: validate.data.email,

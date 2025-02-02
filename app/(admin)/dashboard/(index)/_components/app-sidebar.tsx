@@ -8,13 +8,13 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
 import FormLogout from "./form-logout";
 import { SearchForm } from "./search-form";
 import { VersionSwitcher } from "./version-switcher";
+import ButtonSidebar from "./button-sidebar";
 
 // This is sample data.
 const data = {
@@ -55,6 +55,7 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  console.log("server rendering");
   return (
     <Sidebar {...props}>
       <SidebarHeader>
@@ -73,9 +74,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <SidebarMenu>
                 {item.items.map((item) => (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild isActive={item.isActive}>
-                      <a href={item.url}>{item.title}</a>
-                    </SidebarMenuButton>
+                    <ButtonSidebar title={item.title} url={item.url} />
                   </SidebarMenuItem>
                 ))}
                 <FormLogout />
