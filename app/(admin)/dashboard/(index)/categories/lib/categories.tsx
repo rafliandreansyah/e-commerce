@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prisma";
+import { schemaCategory } from "@/lib/schema";
 import { ActionResult } from "@/types";
 import { revalidatePath } from "next/cache";
 import { redirect, RedirectType } from "next/navigation";
@@ -21,10 +22,19 @@ export async function createCategory(
 ): Promise<ActionResult> {
   try {
     const categoryName = formData.get("name");
-    if (categoryName) {
+    const validate = schemaCategory.safeParse({
+      name: categoryName,
+    });
+
+    if (!validate.success) {
+      return {
+        error: validate.error.errors[0].message,
+      };
+    }
+    if (validate.data.name) {
       await prisma.category.create({
         data: {
-          name: categoryName.toString(),
+          name: validate.data.name,
         },
       });
     } else {
