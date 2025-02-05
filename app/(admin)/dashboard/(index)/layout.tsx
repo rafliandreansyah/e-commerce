@@ -7,6 +7,7 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import AppHeader from "./_components/app-header";
 import { getUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -29,6 +30,7 @@ export default async function RootLayout({
       <SidebarInset>
         <AppHeader />
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">{children}</div>
+        <Toaster />
       </SidebarInset>
     </SidebarProvider>
   );

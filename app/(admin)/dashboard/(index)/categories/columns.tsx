@@ -14,7 +14,7 @@ export const columns: ColumnDef<Category>[] = [
     accessorKey: "createdAt",
     header: "Created At",
     cell: ({ row }) => {
-      const date = row.getValue("createdAt");
+      const date = row.getValue("createdAt") as string;
       const dateFormat = moment(date).format("ddd, DD MMM YYYY");
 
       return <div>{dateFormat}</div>;
@@ -24,7 +24,7 @@ export const columns: ColumnDef<Category>[] = [
     accessorKey: "updatedAt",
     header: "Updated At",
     cell: ({ row }) => {
-      const date = row.getValue("updatedAt");
+      const date = row.getValue("updatedAt") as string;
       const dateFormat = moment(date).format("ddd, DD MMM YYYY");
 
       return <div>{dateFormat}</div>;

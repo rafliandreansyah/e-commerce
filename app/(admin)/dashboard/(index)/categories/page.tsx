@@ -11,6 +11,7 @@ import { Category } from "@/types";
 import { DataTable } from "@/components/ui/data-table";
 import { columns } from "./columns";
 import { getCategories } from "./lib/categories";
+import Link from "next/link";
 
 const datetime = new Date().toISOString();
 export const data: Category[] = [
@@ -48,15 +49,14 @@ export const data: Category[] = [
 
 export default async function CategoriesPage() {
   const categories = await getCategories();
-
-  await new Promise((resolve) => setTimeout(resolve, 3000));
-  console.log(categories);
   return (
     <>
       <div className="text-right">
-        <Button>
-          <CirclePlus /> Add Category
-        </Button>
+        <Link href="/dashboard/categories/create">
+          <Button>
+            <CirclePlus /> Add Category
+          </Button>
+        </Link>
       </div>
       <Card>
         <CardHeader>
@@ -64,7 +64,7 @@ export default async function CategoriesPage() {
           <CardDescription>List of your categories of products</CardDescription>
         </CardHeader>
         <CardContent>
-          <DataTable data={categories} columns={columns} />
+          <DataTable data={categories ? categories : []} columns={columns} />
         </CardContent>
       </Card>
     </>
