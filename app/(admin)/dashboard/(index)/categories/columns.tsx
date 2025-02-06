@@ -3,7 +3,10 @@
 import { Button } from "@/components/ui/button";
 import { Category } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
+import { EditIcon } from "lucide-react";
 import moment from "moment";
+import Link from "next/link";
+import FormDelete from "./_components/form-delete";
 
 export const columns: ColumnDef<Category>[] = [
   {
@@ -33,21 +36,20 @@ export const columns: ColumnDef<Category>[] = [
   {
     accessorKey: "action",
     header: () => <div>Action</div>,
-    cell: () => {
+    cell: ({ row }) => {
+      const { id } = row.original;
       return (
         <div className="flex gap-2">
           <Button
-            variant="outline"
-            className="text-orange-500 hover:bg-orange-200 hover:text-orange-500"
+            className="text-white bg-orange-400 hover:bg-orange-200"
+            size={"sm"}
+            asChild
           >
-            Edit
+            <Link href={`/dashboard/categories/edit/${id}`}>
+              <EditIcon /> Edit
+            </Link>
           </Button>
-          <Button
-            variant="outline"
-            className="text-red-500 hover:bg-red-200 hover:text-red-500"
-          >
-            Delete
-          </Button>
+          <FormDelete id={id} />
         </div>
       );
     },

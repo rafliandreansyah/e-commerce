@@ -14,30 +14,38 @@ import { Label } from "@radix-ui/react-label";
 import Form from "next/form";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect } from "react";
-import { createCategory } from "../categories/lib/categories";
-import { ActionResult } from "@/types";
+import { createCategory, editCategoryById } from "../lib/categories";
+import { ActionResult, Category } from "@/types";
 import { MoonLoader } from "react-spinners";
 import { useToast } from "@/hooks/use-toast";
-import { ToastAction } from "@/components/ui/toast";
+import { unknown } from "zod";
 
-export default function FormCategory() {
-  const initialState: ActionResult = {
-    error: "",
-  };
+const initialState: ActionResult = {
+  error: "",
+};
+
+export default function FormCategory({
+  isEdit = false,
+  category,
+}: {
+  isEdit?: boolean;
+  category?: Category;
+}) {
   const router = useRouter();
+
+  const editCategory = (_: unknown, formData: FormData) =>
+    editCategoryById(unknown, formData, category?.id);
   const [state, action, isPending] = useActionState(
-    createCategory,
+    isEdit ? editCategory : createCategory,
     initialState
   );
   const { toast } = useToast();
   useEffect(() => {
     if (state && state.error) {
       toast({
+        variant: "destructive",
         title: "Failed",
         description: state.error,
-        action: (
-          <ToastAction altText="Goto schedule to undo">Close</ToastAction>
-        ),
       });
     }
   }, [state, toast]);
@@ -56,14 +64,29 @@ export default function FormCategory() {
               placeholder="Enter category..."
               className="mt-2"
               name="name"
+              defaultValue={isEdit ? category?.name : undefined}
             />
+            {isEdit && (
+              <input name="categoryId" defaultValue={category?.id} hidden />
+            )}
           </CardContent>
           <CardFooter className="flex gap-4">
-            <Button variant="outline" type="button" onClick={router.back}>
+            <Button
+              variant="outline"
+              type="button"
+              onClick={router.back}
+              disabled={isPending}
+            >
               Cancel
             </Button>
-            <Button type="submit">
-              {isPending ? <MoonLoader size={20} color="#ffffff" /> : "Create"}
+            <Button type="submit" disabled={isPending}>
+              {isPending ? (
+                <MoonLoader size={20} color="#ffffff" />
+              ) : isEdit ? (
+                "Edit"
+              ) : (
+                "Create"
+              )}
             </Button>
           </CardFooter>
         </Card>
