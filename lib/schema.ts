@@ -14,3 +14,9 @@ export const schemaCategory = z.object({
     .string({ required_error: "category is required" })
     .min(4, { message: "Category should have 4 characters" }),
 });
+
+export const schemaLocation = z.object({
+  name: z
+    .string({ required_error: "category is required" })
+    .min(4, { message: "Category should have 4 characters" }),
+});

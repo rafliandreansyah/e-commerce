@@ -8,3 +8,10 @@ export type Category = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type Location = {
+  id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+};

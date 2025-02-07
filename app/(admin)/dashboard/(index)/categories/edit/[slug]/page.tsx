@@ -13,8 +13,8 @@ export default async function EditCategoryPage({
   console.log(slug);
   const category = await getCategoryById(slug);
   if (!category) {
-    revalidatePath("/dashboard/category");
-    return redirect("/dashboard/category", RedirectType.replace);
+    revalidatePath("/dashboard/categories");
+    return redirect("/dashboard/categories", RedirectType.replace);
   }
   return (
     <>
