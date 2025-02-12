@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { TrashIcon } from "lucide-react";
 import { useActionState, useEffect } from "react";
-import { deleteCategoryById } from "../lib/categories";
+import { deleteCategoryById } from "../lib/data";
 import { ActionResult } from "@/types";
 import { useToast } from "@/hooks/use-toast";
 import { MoonLoader } from "react-spinners";

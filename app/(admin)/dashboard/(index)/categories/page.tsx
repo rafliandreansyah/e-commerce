@@ -9,7 +9,7 @@ import {
 import { CirclePlus } from "lucide-react";
 import { DataTable } from "@/components/ui/data-table";
 import { columns } from "./columns";
-import { getCategories } from "./lib/categories";
+import { getCategories } from "./lib/data";
 import Link from "next/link";
 
 export default async function CategoriesPage() {

@@ -1,4 +1,4 @@
-import { getLocations } from "./lib/location";
+import { getLocations } from "./lib/data";
 import { Button } from "@/components/ui/button";
 import {
   Card,

@@ -14,7 +14,7 @@ import { Label } from "@radix-ui/react-label";
 import Form from "next/form";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect } from "react";
-import { createCategory, editCategoryById } from "../lib/categories";
+import { createCategory, editCategoryById } from "../lib/data";
 import { ActionResult, Category } from "@/types";
 import { MoonLoader } from "react-spinners";
 import { useToast } from "@/hooks/use-toast";

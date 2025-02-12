@@ -1,7 +1,7 @@
 import { redirect, RedirectType } from "next/navigation";
 import ButtonBack from "../../../_components/button-back";
 import FormCategory from "../../_components/form-category";
-import { getCategoryById } from "../../lib/categories";
+import { getCategoryById } from "../../lib/data";
 import { revalidatePath } from "next/cache";
 
 export default async function EditCategoryPage({
