@@ -1,13 +1,13 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { getImageUrl } from "@/lib/supabase";
 import { Brand } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { EditIcon } from "lucide-react";
 import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
+import FormDelete from "./_components/form-delete";
 // import FormDelete from "./_components/form-delete";
 
 export const columns: ColumnDef<Brand>[] = [
@@ -18,12 +18,7 @@ export const columns: ColumnDef<Brand>[] = [
       const brand = row.original;
       return (
         <div className="flex gap-4 items-center justify-center">
-          <Image
-            src={getImageUrl(brand.logo)}
-            alt="Logo brand"
-            width={80}
-            height={80}
-          />
+          <Image src={brand.logo} alt="Logo brand" width={80} height={80} />
           <p>{brand.name}</p>
         </div>
       );
@@ -65,7 +60,7 @@ export const columns: ColumnDef<Brand>[] = [
               <EditIcon /> Edit
             </Link>
           </Button>
-          {/* <FormDelete id={id} /> */}
+          <FormDelete id={id} />
         </div>
       );
     },

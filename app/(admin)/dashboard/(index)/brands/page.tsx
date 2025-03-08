@@ -10,10 +10,17 @@ import { DataTable } from "@/components/ui/data-table";
 import { CirclePlus } from "lucide-react";
 import Link from "next/link";
 import { columns } from "./columns";
-import { getBrands } from "./libs/data";
+import { getBrands } from "./libs/action";
+import { getImageUrl } from "@/lib/supabase";
 
 export default async function BrandsPage() {
   const brands = await getBrands();
+  const brandsMap = brands.map((brand) => {
+    return {
+      ...brand,
+      logo: getImageUrl(brand.logo, "brands"),
+    };
+  });
   return (
     <>
       <div className="text-right">
@@ -29,7 +36,7 @@ export default async function BrandsPage() {
           <CardDescription>Manage your brands of products</CardDescription>
         </CardHeader>
         <CardContent>
-          <DataTable data={brands ?? []} columns={columns} />
+          <DataTable data={brandsMap ?? []} columns={columns} />
         </CardContent>
       </Card>
     </>
